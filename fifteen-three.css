@@ -1,0 +1,180 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    background: #eee;
+}
+#game, #intro, #enternames, #gameover {
+    display: none;
+}
+.gameover #gameover {
+    display: block;
+}
+.intro #intro {
+    display: block;
+}
+.nameentry #enternames {
+    display: block;
+}
+.playing #game {
+    display: block;
+}
+h2 {
+    font-size: 1.3em;
+    font-weight: normal;
+}
+#playerinfo {
+    border-bottom: 2px solid #000;
+    padding: 10px 5px;
+    color: #333;
+    font-size: 1.3em;
+}
+#playerinfo strong {
+    color: green;
+}
+#roll {
+    display: block;
+    width: 100%;
+    line-height: 3em;
+    font-size: 3em;
+    color:green;
+    border: none;
+    text-align: center;
+    background: transparent;
+}
+#roll.throwactive {
+    display: none;
+}
+#counter {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    font-size: 2.5em;
+    border: 5px solid #000;
+    border-radius: 50%;
+    width: 2em;
+    height: 2em;
+    text-align: center;
+    line-height: 2em;
+}
+#rollresults.hidden {
+    display: none;
+}
+#rollresults {
+    margin: 1em 0;
+    text-align: center;
+}
+#die1, #die2, #die3 {
+    font-size: 8em;
+}
+#operators {
+    text-align: center;
+    display: block;
+}
+#operators.hidden {
+    display: none;
+}
+button {
+    border: none;
+    background: transparent;
+}
+#operators button {
+    border: none;
+    margin-left:.1em;
+    font-size: 3em;
+    background: #eee;
+    width: 1.5em;
+    line-height: 1.3em;
+}
+#errorfield {
+    background: firebrick;
+    color: #fff;
+    font-size: 1.5em;
+    margin: 5px 0;
+    padding: 5px 10px;
+    display: block;
+}
+#errorfield.hidden {
+    display: none;
+}
+#operators button[data-val="delete"] {
+    background: pink;
+}
+#operators button[data-val="done"] {
+    background: lime;
+}
+#rollresults button {
+    padding: .5em;
+    border: none;
+}
+.error {
+    color: red;
+}
+.selected {
+    opacity: 0.2;
+}
+#calculation {
+    display: block;
+    padding: 10px 0;
+    font-size: 3em;
+    letter-spacing: .2em;
+    text-align: center;
+}
+#message {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    left: 20px;
+    padding: 30px;
+    line-height: 90px;
+    background: #fff;
+    background:rgba(61, 227, 78, 0.9);
+    z-index: 10;
+    transition: 600ms;
+}
+#message.hidden {
+    top: -700px;
+    transition: 1s;
+}
+section {
+    display: block;
+    background: #fff;
+    padding: 10px;
+    overflow: hidden;
+    border: 1px solid #ccc;
+    box-shadow: 4px 4px 10px #ccc;
+    margin: 10px;
+}
+.action {
+    font-size: 1.4em;
+    border: none;   
+    float: right;
+}
+ul, li {
+    list-style: none;
+}
+li {
+    padding-bottom: .5em;
+}
+table {
+    border-collapse: collapse;
+}
+
+th[colspan] {
+    border-right: 1px solid #000;
+    border-bottom: 1px solid #000;
+}
+tr th:last-child{
+    border-right: none;
+}
+tr td:nth-child(2n),tr th:nth-child(2n) {
+    border-right: 1px solid #000;
+}
+tr td:last-child, tr th:last-child {
+    border-right: none;
+}
+td,th {
+    padding: 5px 10px;
+    text-align: center;
+}

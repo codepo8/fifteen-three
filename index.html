@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Fifteen-three</title>
+    <link rel="stylesheet" href="fifteen-three.css">
+    <link rel="stylesheet" href="dice.css">
+</head>
+<body>
+    <section id="intro">
+        <h2>Fifteen-three</h2>
+        <p><strong>Instructions:</strong> TODO </p>
+        <form id="introform">
+            <label for="players">How many players?</label>
+            <select name="players" id="players">
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+            </select>
+            <input type="submit" class="action" value="go!">
+        </form>
+    </section>
+    <section id="enternames">
+            <h2>Fifteen-three</h2>
+            <form id="playerform">
+                <ul id="playerlist">
+                    <template>
+                    <li>
+                        <label for="player$count">Name player #$count</label>
+                        <input required id="player$count">
+                    </li>
+                    </template>
+                </ul>
+                <input type="submit" class="action" value="go!">
+            </form>
+        </section>
+    <section id="game">
+        <div id="playerinfo">
+            <template>
+            Player: <strong>$name</strong>
+            - Score: $score
+            - Losses: $losses
+            </template>
+        </div>
+        <div id="makeitso"><button id="roll">Roll the Dice</button></div>
+        <div id="rollresults">
+                <button id="die1" data-val="0"></button>
+                <button id="die2" data-val="0"></button>
+                <button id="die3" data-val="0"></button>
+        </div>
+        <div id="operators">
+                <button data-val="+">+</button>
+                <button data-val="-">-</button>
+                <button data-val="*">*</button>
+                <button data-val="/">/</button>
+                <button data-val="(">(</button>
+                <button data-val=")">)</button>
+                <button data-val="delete">x</button>
+                <button data-val="done">=</button>
+        </div>
+        <div id="errorfield"></div>
+        <output id="calculation"></output>
+        
+        <h2>Scores</h2>
+        <table id="gamescore"></table>
+    </section>
+    <section id="gameover">
+        <h2>Game Over</h2>
+        <div id="endscores">
+             <ol>
+                <template>
+                <li>$name</li>
+                </template>
+            </ol>
+         </div>
+        <button class="action">Repeat with same players</button>
+        <button class="action">New Game</button>
+    </section>
+    <div id="message" class="hidden">
+        <div><template>$message</template></div>
+        <button class="action">OK</button>
+    </div>
+    <script src="fifteen-three.js"></script>
+</body>
+</html>
