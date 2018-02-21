@@ -11,71 +11,22 @@ const rollresults = document.querySelector('#rollresults');
 const progress = document.querySelector('#progressbar');
 const fullscore = document.querySelector('#tomatch');
 let currentterm = '';
-const winnerpatterns = {
-    "111": [3,  "1 + 1 + 1"],
-    "112": [4,  "2 * (1 + 1)"],
-    "113": [6,  "3 * (1 + 1)"],
-    "114": [8,  "4 * (1 + 1)"],
-    "115": [10, "5 * (1 + 1)"],
-    "116": [12, "6 * (1 + 1)"],
-    "122": [6,  "(1 + 2) * 2"],
-    "123": [9,  "(1 + 2) * 3"],
-    "124": [12, "(1 + 2) * 4"],
-    "125": [15, "(1 + 2) * 5"],
-    "126": [14, "(1 + 6) * 2"],
-    "133": [15, ""],
-    "134": [15,""],
-    "135": [15,""],
-    "136": [15,""],
-    "144": [15,""],
-    "145": [15,""],
-    "146": [15,""],
-    "155": [15,""],
-    "156": [15,""],
-    "166": [15,""],
-    "222": [15,""],
-    "223": [15,""],
-    "224": [15,""],
-    "225": [15,""],
-    "226": [15,""],
-    "233": [15,""],
-    "234": [15,""],
-    "235": [15,""],
-    "236": [15,""],
-    "244": [15,""],
-    "245": [15,""],
-    "246": [15,""],
-    "255": [15,""],
-    "256": [15,""],
-    "266": [15,""],
-    "333": [15,""],
-    "334": [15,""],
-    "335": [15,""],
-    "336": [15,""],
-    "344": [15,""],
-    "345": [15,""],
-    "346": [15,""],
-    "355": [15,""],
-    "356": [15,""],
-    "366": [15, "6 + 6 + 3"],
-    "444": [12, "4 + 4 + 4"],
-    "445": [13, "4 + 4 + 5"],
-    "446": [14, "4 + 4 + 6"],
-    "455": [14, "4 + 5 + 5"],
-    "456": [15, "4 + 5 + 6"],
-    "466": [12, "(6 - 4) * 6"],
-    "555": [15, "5 + 5 + 5"],
-    "556": [6,  "(6 + 5) - 5"],
-    "566": [7,  "(6 + 6) - 5"],
-    "666": [6,  "6 + 6 - 6 = 6"]
-}
+let config = {};
 
 const init = () => {
     throwbutton.className = 'active';
     rollresults.className = 'hidden';
     errorfield.className = 'hidden';
-}
 
+    fetch('gameconfig.json').then(function(response) {
+        console.log(response);
+        return response.text();
+      }).then(function(text) {
+        config = JSON.parse(text);
+        console.log(config);
+    });
+
+}
 
 const getdice = (ev) => {
     let t = ev.target;
@@ -97,7 +48,7 @@ const operatorfunctions = (ev) => {
     } 
     if (t.dataset.val === 'done') {
         if (currentterm === '') {
-            errorfield.innerHTML = 'Nothing to calculate :(';
+            errorfield.innerHTML = config.errormessages.noterm;;
             calculation.className = 'error';
             errorfield.className = '';
             return;
@@ -105,7 +56,7 @@ const operatorfunctions = (ev) => {
          try {
             eval(currentterm);
         } catch (e) {
-            errorfield.innerHTML = 'This is not a valid term';
+            errorfield.innerHTML = config.errormessages.invalidterm;
             calculation.className = 'error';
             errorfield.className = '';
             return;
@@ -113,10 +64,10 @@ const operatorfunctions = (ev) => {
         let finalvalue = eval(currentterm);
         if (finalvalue < 0) {
             errorfield.className = '';
-            errorfield.innerHTML = 'This is less than zero :(';
+            errorfield.innerHTML = config.errormessages.lessthanzero;
         }
         if (finalvalue > 15) {
-            errorfield.innerHTML = 'This is more than 15 :(';
+            errorfield.innerHTML = config.errormessages.morethan15;
             calculation.className = 'error';
             errorfield.className = '';
         } 
@@ -141,9 +92,9 @@ const rollthem = (ev) => {
     let valuetwo = throwdice();
     let valuethree = throwdice();
     let valuematch = [valueone, valuetwo, valuethree].sort();
-    fullscore.innerHTML = winnerpatterns[valuematch.join('')][0];
-    fullscore.dataset.bestvalue = winnerpatterns[valuematch.join('')][0];
-    console.log(winnerpatterns[valuematch.join('')][1]);
+    fullscore.innerHTML = config.winnerpatterns[valuematch.join('')][0];
+    fullscore.dataset.bestvalue = config.winnerpatterns[valuematch.join('')][0];
+    // console.log(winnerpatterns[valuematch.join('')][1]);
     die1.title = die1.dataset.val = valueone;
     die2.title = die2.dataset.val = valuetwo;
     die3.title = die3.dataset.val = valuethree;
@@ -155,6 +106,12 @@ const rollthem = (ev) => {
     operators.className = '';
     ev.preventDefault();
 };
+
+const outoftime = () => {
+    operators.className = 'hidden';
+    errorfield.innerHTML = config.errormessages.outoftime;
+    errorfield.className = '';
+}
 
 /* HELPER FUNCTIONS */
 
@@ -205,7 +162,7 @@ const throwdice = () => {
 }
 
 /* EVENT HANDLERS */
-progressbar.addEventListener('animationend' ,(ev) => console.log(ev));
+progressbar.addEventListener('animationend' ,outoftime);
 operators.addEventListener('click' ,operatorfunctions);
 rollresults.addEventListener('click', getdice);
 throwbutton.addEventListener('click',rollthem);

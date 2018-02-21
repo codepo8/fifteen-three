@@ -4,11 +4,13 @@ body {
     margin: 0;
     padding: 0;
     background:whitesmoke;
+    font-size: calc(16px + 1vw);
 }
 header {
     display: block;
     background: #333;
     color: #fff;
+    font-size: 0.6em;
     overflow: hidden;
 }
 header h1 {
@@ -77,8 +79,8 @@ button {
 #roll {
     display: block;
     width: 100%;
-    line-height: 3em;
-    font-size: 3em;
+    line-height: 2em;
+    font-size: 2em;
     color:green;
     border: none;
     text-align: center;
@@ -103,11 +105,11 @@ button {
 }
 
 #die1, #die2, #die3 {
-    font-size: 8em;
+    font-size: 4em;
 }
 
 #tomatch {
-    font-size: 2.5em;
+    font-size: 2em;
 }
 
 .selected {
@@ -127,10 +129,11 @@ button {
 #operators button {
     border: none;
     margin-left:.1em;
-    font-size: 3em;
+    font-size: 2em;
     background: #eee;
     width: 1.5em;
     line-height: 1.3em;
+    margin-bottom: .2em;
 }
 #operators button[data-val="delete"] {
     background: pink;
@@ -158,8 +161,8 @@ button {
 #calculation {
     display: block;
     padding: 10px 0;
-    font-size: 3em;
-    letter-spacing: .2em;
+    font-size: 1.8em;
+    letter-spacing: .1em;
     text-align: center;
 }
 .error {
@@ -168,7 +171,7 @@ button {
 
 footer {
     display: block;
-    font-size: 0.8em;
+    font-size: 0.5em;
     padding-top: 3em;
     text-align: center;
     color: #ccc;
