@@ -8,111 +8,74 @@ const die3 = document.querySelector('#die3');
 const operators = document.querySelector('#operators');
 const errorfield = document.querySelector('#errorfield');
 const rollresults = document.querySelector('#rollresults');
-const introform = document.querySelector('#introform');
-const playerform = document.querySelector('#playerform');
-const repeatbutton = document.querySelector('#repeatgame');
-const newbutton = document.querySelector('#newgame');
-
+const progress = document.querySelector('#progressbar');
+const fullscore = document.querySelector('#tomatch');
 let currentterm = '';
-let state = 'intro';
 const winnerpatterns = {
-    15: [ [5,5,5,'5+5+5'] ],
-    14: [],
-    13: [],
-    12: [],
-    11: [],
-    10: [],
-    9: [],
-    8: [],
-    7: [],
-    6: [],
-    5: [],
-    4: [],
-    3: []
+    "111": [3,  "1 + 1 + 1"],
+    "112": [4,  "2 * (1 + 1)"],
+    "113": [6,  "3 * (1 + 1)"],
+    "114": [8,  "4 * (1 + 1)"],
+    "115": [10, "5 * (1 + 1)"],
+    "116": [12, "6 * (1 + 1)"],
+    "122": [6,  "(1 + 2) * 2"],
+    "123": [9,  "(1 + 2) * 3"],
+    "124": [12, "(1 + 2) * 4"],
+    "125": [15, "(1 + 2) * 5"],
+    "126": [14, "(1 + 6) * 2"],
+    "133": [15, ""],
+    "134": [15,""],
+    "135": [15,""],
+    "136": [15,""],
+    "144": [15,""],
+    "145": [15,""],
+    "146": [15,""],
+    "155": [15,""],
+    "156": [15,""],
+    "166": [15,""],
+    "222": [15,""],
+    "223": [15,""],
+    "224": [15,""],
+    "225": [15,""],
+    "226": [15,""],
+    "233": [15,""],
+    "234": [15,""],
+    "235": [15,""],
+    "236": [15,""],
+    "244": [15,""],
+    "245": [15,""],
+    "246": [15,""],
+    "255": [15,""],
+    "256": [15,""],
+    "266": [15,""],
+    "333": [15,""],
+    "334": [15,""],
+    "335": [15,""],
+    "336": [15,""],
+    "344": [15,""],
+    "345": [15,""],
+    "346": [15,""],
+    "355": [15,""],
+    "356": [15,""],
+    "366": [15, "6 + 6 + 3"],
+    "444": [12, "4 + 4 + 4"],
+    "445": [13, "4 + 4 + 5"],
+    "446": [14, "4 + 4 + 6"],
+    "455": [14, "4 + 5 + 5"],
+    "456": [15, "4 + 5 + 6"],
+    "466": [12, "(6 - 4) * 6"],
+    "555": [15, "5 + 5 + 5"],
+    "556": [6,  "(6 + 5) - 5"],
+    "566": [7,  "(6 + 6) - 5"],
+    "666": [6,  "6 + 6 - 6 = 6"]
 }
-let game = {
-    players: [],
-    currentplayer: 0
-};
 
 const init = () => {
-    setstate('intro');
     throwbutton.className = 'active';
     rollresults.className = 'hidden';
-    operators.className = 'hidden';
-}
-
-const gameover = (loser) => {
-    let lossessort = game.players.sort((a,b) => {return a.losses > b.losses});
-    var out = '';
-    var template = document.querySelector('#winnerlist template').cloneNode(true);
-    lossessort.forEach(player => {
-        out += template.innerHTML.replace(/\$name/g, player.name);
-    });
-    console.log(out);
-    templatereplace('#winnerlist', out);
-}
-
-// Intro 
-const getplayernames = (ev) => {
-    var out = '';
-    var template = document.querySelector('#playerlist template').cloneNode(true);
-    for (let i = 0; i < document.querySelector('#players').value; i++) {
-        out += template.innerHTML.replace(/\$count/g, i + 1);
-    }
-    templatereplace('#playerlist', out);
-    setstate('nameentry');
-    ev.preventDefault();
-}
-// Player Entry 
-const addplayerstogame = (ev) => {
-    for (let i = 0; i < document.querySelector('#players').value; i++) {
-        let field = document.querySelector('#player' + (i+1));
-        game.players.push({
-            name: field.value,
-            score: 0,
-            losses: 0
-        })
-    }
-    ev.preventDefault();
-    startgame();
-};
-
-// New Game
-
-const startgame = () => {
-    setstate('playing');
-    rollresults.className = 'hidden';
-    drawplayer(game);
-    drawscore(game);
     errorfield.className = 'hidden';
-};
-
-const drawplayer = (game) => {
-    templatereplace('#playerinfo', {
-        'name': game.players[game.currentplayer].name,
-        'score': game.players[game.currentplayer].score,
-        'losses': game.players[game.currentplayer].losses
-    });
-    // showmessage(game.players[game.currentplayer].name + "'s turn");
 }
 
-const drawscore = (game) => {
-    let table = document.querySelector('#gamescore');
-    let out = '<thead><tr>';
-    game.players.forEach(p => { out += `<th colspan="2">${p.name}</th>`; });
-    out += '</tr><tr>';
-    game.players.forEach(p => { out += `<th>Score</th><th>Losses</th>`; });
-    out += '</tr></thead><tr>';
-    game.players.forEach(p => { out += `<td>${p.score}</td><td>${p.losses}</td>`; });
-    out += '</tr></table>';
-    table.innerHTML = out;
-}
-
-throwbutton.addEventListener('click',(ev) => {
-    rollthem();
-    ev.preventDefault();
-});
 
 const getdice = (ev) => {
     let t = ev.target;
@@ -160,9 +123,10 @@ const operatorfunctions = (ev) => {
         if (finalvalue >= 0 && finalvalue < 16) {
             calculation.innerHTML = currentterm + ' = ' + eval(currentterm);
             rollresults.className = 'hidden';
-            errorfield.className = '';
+            calculation.classList.remove('error');
+            errorfield.className = 'hidden';
             throwbutton.className = ''; 
-            advancegame(finalvalue);
+            progressbar.classList.remove('animated');
         }
         return;
     } 
@@ -171,51 +135,15 @@ const operatorfunctions = (ev) => {
     ev.preventDefault();
 }
 
-const advancegame = (finalvalue) => {
-    game.players[game.currentplayer].score = finalvalue;
-    errorfield.className = 'hidden';
-    operators.className = 'hidden';
-    if (game.currentplayer + 1 < game.players.length) {
-        game.currentplayer += 1;
-        clearresult();
-        startgame();
-    } else {
-        drawscore(game);
-        let scores = [];
-        let scoresort = game.players.sort((a,b) => {return a.score > b.score});
-        if (scoresort[0].score < scoresort[1].score) {
-            let loser = '';
-            game.players.forEach( (p,k) => {
-                if (p.name === scoresort[0].name){
-                    game.players[k].losses += 1
-                    loser = game.players[k];
-                }
-            });
-            if (loser.losses === 5){
-                setstate('gameover');
-                gameover(loser);
-            } else {
-                game.players.forEach((p)=>p.score = 0);
-                game.currentplayer = 0;
-                showmessage(loser.name + ' lost this round.', () => {
-                    clearresult();
-                    startgame();
-                });
-           }
-        } else {
-            showmessage('No single loser this round!');
-            game.currentplayer = 0;
-            clearresult();
-            startgame();
-        }
-    }
-}
-
-
 const rollthem = (ev) => {
+    progress.className = 'animated';
     let valueone = throwdice();
     let valuetwo = throwdice();
     let valuethree = throwdice();
+    let valuematch = [valueone, valuetwo, valuethree].sort();
+    fullscore.innerHTML = winnerpatterns[valuematch.join('')][0];
+    fullscore.dataset.bestvalue = winnerpatterns[valuematch.join('')][0];
+    console.log(winnerpatterns[valuematch.join('')][1]);
     die1.title = die1.dataset.val = valueone;
     die2.title = die2.dataset.val = valuetwo;
     die3.title = die3.dataset.val = valuethree;
@@ -225,12 +153,10 @@ const rollthem = (ev) => {
     throwbutton.className = 'throwactive';
     rollresults.className = '';
     operators.className = '';
+    ev.preventDefault();
 };
 
 /* HELPER FUNCTIONS */
-const setstate = (state) => {
-    document.body.className = state;
-}
 
 const templatereplace = (id, content) => {
     let newcontent = '';
@@ -274,32 +200,14 @@ const clearresult = () => {
     die3.classList.remove('selected');
 };
 
-const repeatgame = (ev) => {
-    game.players.forEach(p => {
-        p.score = 0;
-        p.losses = 0;
-    });
-    calculation.innerHTML = '';
-    game.currentplayer = 0;
-    startgame();
-    ev.preventDefault();
-}
-const newgame = (ev) => {
-    game.players = [];
-    calculation.innerHTML = '';
-    game.currentplayer = 0;
-    init();
-    ev.preventDefault();
-}
 const throwdice = () => {
     return ~~(Math.random() * 6) + 1;
 }
 
 /* EVENT HANDLERS */
-repeatbutton.addEventListener('click', repeatgame);
-newbutton.addEventListener('click', newgame);
-playerform.addEventListener('submit', addplayerstogame);
-introform.addEventListener('submit', getplayernames);
+progressbar.addEventListener('animationend' ,(ev) => console.log(ev));
 operators.addEventListener('click' ,operatorfunctions);
 rollresults.addEventListener('click', getdice);
+throwbutton.addEventListener('click',rollthem);
 window.addEventListener('DOMContentLoaded', init);
+

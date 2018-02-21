@@ -3,36 +3,77 @@ body {
     width: 100%;
     margin: 0;
     padding: 0;
-    background: #eee;
+    background:whitesmoke;
 }
-#game, #intro, #enternames, #gameover {
-    display: none;
-}
-.gameover #gameover {
+header {
     display: block;
+    background: #333;
+    color: #fff;
+    overflow: hidden;
 }
-.intro #intro {
-    display: block;
-}
-.nameentry #enternames {
-    display: block;
-}
-.playing #game {
-    display: block;
-}
-h2 {
-    font-size: 1.3em;
+header h1 {
+    float: left;
+    font-size: 1em;
     font-weight: normal;
+    padding-left: 1em;
 }
-#playerinfo {
-    border-bottom: 2px solid #000;
-    padding: 10px 5px;
-    color: #333;
-    font-size: 1.3em;
+header a {
+    float: right;
+    color: #fff;
+    padding-right: 1em;
+    font-size: 1em;
+    line-height: 3em;
 }
-#playerinfo strong {
-    color: green;
+
+section {
+    display: block;
+    background: #fff;
+    padding: 10px;
+    overflow: hidden;
+    border: 1px solid #ccc;
+    box-shadow: 4px 4px 10px #ccc;
+    margin: 10px;
 }
+
+button {
+    border: none;
+    background: transparent;
+}
+
+.action {
+    font-size: 1.4em;
+    border: none;   
+    float: right;
+}
+
+/* Progress bar */
+
+#progressbar {
+    height: 1em;
+    background: linear-gradient(to right, green, yellow, red);
+    position: relative;
+}
+#progressbar div {
+    background: #fff;
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 1em;
+    width: 100%;
+}
+#progressbar.animated div {
+    animation: reveal 20s linear;
+}
+
+@keyframes reveal {
+    from {width: 100%;}
+    to {width: 0;}
+}
+
+
+/* Dice field */
+
+/* Roll the dice button */
 #roll {
     display: block;
     width: 100%;
@@ -46,28 +87,35 @@ h2 {
 #roll.throwactive {
     display: none;
 }
-#counter {
-    position: absolute;
-    right: 10px;
-    top: 10px;
-    font-size: 2.5em;
-    border: 5px solid #000;
-    border-radius: 50%;
-    width: 2em;
-    height: 2em;
-    text-align: center;
-    line-height: 2em;
-}
-#rollresults.hidden {
-    display: none;
-}
+
 #rollresults {
     margin: 1em 0;
     text-align: center;
 }
+
+#rollresults.hidden {
+    display: none;
+}
+
+#rollresults button {
+    padding: .5em;
+    border: none;
+}
+
 #die1, #die2, #die3 {
     font-size: 8em;
 }
+
+#tomatch {
+    font-size: 2.5em;
+}
+
+.selected {
+    opacity: 0.2;
+}
+
+/* Calculator buttons */
+
 #operators {
     text-align: center;
     display: block;
@@ -75,10 +123,7 @@ h2 {
 #operators.hidden {
     display: none;
 }
-button {
-    border: none;
-    background: transparent;
-}
+
 #operators button {
     border: none;
     margin-left:.1em;
@@ -87,6 +132,15 @@ button {
     width: 1.5em;
     line-height: 1.3em;
 }
+#operators button[data-val="delete"] {
+    background: pink;
+}
+#operators button[data-val="done"] {
+    background: lime;
+}
+
+/* Error message */
+
 #errorfield {
     background: firebrick;
     color: #fff;
@@ -98,22 +152,9 @@ button {
 #errorfield.hidden {
     display: none;
 }
-#operators button[data-val="delete"] {
-    background: pink;
-}
-#operators button[data-val="done"] {
-    background: lime;
-}
-#rollresults button {
-    padding: .5em;
-    border: none;
-}
-.error {
-    color: red;
-}
-.selected {
-    opacity: 0.2;
-}
+
+/* Calculation result field */ 
+
 #calculation {
     display: block;
     padding: 10px 0;
@@ -121,60 +162,17 @@ button {
     letter-spacing: .2em;
     text-align: center;
 }
-#message {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    left: 20px;
-    padding: 30px;
-    line-height: 90px;
-    background: #fff;
-    background:rgba(61, 227, 78, 0.9);
-    z-index: 10;
-    transition: 600ms;
-}
-#message.hidden {
-    top: -700px;
-    transition: 1s;
-}
-section {
-    display: block;
-    background: #fff;
-    padding: 10px;
-    overflow: hidden;
-    border: 1px solid #ccc;
-    box-shadow: 4px 4px 10px #ccc;
-    margin: 10px;
-}
-.action {
-    font-size: 1.4em;
-    border: none;   
-    float: right;
-}
-ul, li {
-    list-style: none;
-}
-li {
-    padding-bottom: .5em;
-}
-table {
-    border-collapse: collapse;
+.error {
+    color: red;
 }
 
-th[colspan] {
-    border-right: 1px solid #000;
-    border-bottom: 1px solid #000;
-}
-tr th:last-child{
-    border-right: none;
-}
-tr td:nth-child(2n),tr th:nth-child(2n) {
-    border-right: 1px solid #000;
-}
-tr td:last-child, tr th:last-child {
-    border-right: none;
-}
-td,th {
-    padding: 5px 10px;
+footer {
+    display: block;
+    font-size: 0.8em;
+    padding-top: 3em;
     text-align: center;
+    color: #ccc;
+}
+footer a {
+    color: #999;
 }
