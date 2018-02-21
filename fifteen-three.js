@@ -1,5 +1,4 @@
 
-
 /* DOM ELEMENTS */
 const throwbutton = document.querySelector('#roll');
 const calculation = document.querySelector('#calculation');
@@ -11,10 +10,12 @@ const errorfield = document.querySelector('#errorfield');
 const rollresults = document.querySelector('#rollresults');
 const introform = document.querySelector('#introform');
 const playerform = document.querySelector('#playerform');
+const repeatbutton = document.querySelector('#repeatgame');
+const newbutton = document.querySelector('#newgame');
 
 let currentterm = '';
 let state = 'intro';
-const winnerpatters = {
+const winnerpatterns = {
     15: [ [5,5,5,'5+5+5'] ],
     14: [],
     13: [],
@@ -42,8 +43,14 @@ const init = () => {
 }
 
 const gameover = (loser) => {
-    let lossessort = game.players.sort((a,b) => {return a.losses < b.losses});
-    document.querySelector('#endscores').innerHTML = '';
+    let lossessort = game.players.sort((a,b) => {return a.losses > b.losses});
+    var out = '';
+    var template = document.querySelector('#winnerlist template').cloneNode(true);
+    lossessort.forEach(player => {
+        out += template.innerHTML.replace(/\$name/g, player.name);
+    });
+    console.log(out);
+    templatereplace('#winnerlist', out);
 }
 
 // Intro 
@@ -53,8 +60,7 @@ const getplayernames = (ev) => {
     for (let i = 0; i < document.querySelector('#players').value; i++) {
         out += template.innerHTML.replace(/\$count/g, i + 1);
     }
-    templatereplace('#playerlist', out, true);
-//    document.querySelector('#playerlist').innerHTML = out;
+    templatereplace('#playerlist', out);
     setstate('nameentry');
     ev.preventDefault();
 }
@@ -87,7 +93,7 @@ const drawplayer = (game) => {
         'name': game.players[game.currentplayer].name,
         'score': game.players[game.currentplayer].score,
         'losses': game.players[game.currentplayer].losses
-    }, true);
+    });
     // showmessage(game.players[game.currentplayer].name + "'s turn");
 }
 
@@ -268,11 +274,30 @@ const clearresult = () => {
     die3.classList.remove('selected');
 };
 
+const repeatgame = (ev) => {
+    game.players.forEach(p => {
+        p.score = 0;
+        p.losses = 0;
+    });
+    calculation.innerHTML = '';
+    game.currentplayer = 0;
+    startgame();
+    ev.preventDefault();
+}
+const newgame = (ev) => {
+    game.players = [];
+    calculation.innerHTML = '';
+    game.currentplayer = 0;
+    init();
+    ev.preventDefault();
+}
 const throwdice = () => {
     return ~~(Math.random() * 6) + 1;
 }
 
 /* EVENT HANDLERS */
+repeatbutton.addEventListener('click', repeatgame);
+newbutton.addEventListener('click', newgame);
 playerform.addEventListener('submit', addplayerstogame);
 introform.addEventListener('submit', getplayernames);
 operators.addEventListener('click' ,operatorfunctions);
