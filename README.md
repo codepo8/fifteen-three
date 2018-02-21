@@ -1,2 +1,2 @@
 # 15with3
-A game in the making
+A dice game in the making
