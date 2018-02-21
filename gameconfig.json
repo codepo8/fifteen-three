@@ -6,6 +6,7 @@
         "invalidterm": "This is not a valid term",
         "outoftime": "Out of time :("
     },
+    
     "winnerpatterns": {
         "111": [3,  "1 + 1 + 1"],
         "112": [4,  "2 * (1 + 1)"],
