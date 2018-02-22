@@ -12,6 +12,23 @@ const progress = document.querySelector('#progressbar');
 const fullscore = document.querySelector('#tomatch');
 let currentterm = '';
 let config = {};
+let edited = null;
+let players = [];
+
+document.querySelector('#players').addEventListener('click', (ev) => {
+    let t = ev.target;
+    if (t.tagName === 'INPUT' && t.type === "button") {
+        t.type = "text";
+        t.select();
+        edited = t;
+    }
+}); 
+document.querySelector('#players form').addEventListener('submit', (ev) => {
+    edited.type = "button";
+    ev.preventDefault();
+}); 
+
+
 
 const init = () => {
     throwbutton.className = 'active';
