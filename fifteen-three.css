@@ -43,7 +43,7 @@ button {
 }
 
 .action {
-    font-size: 1.4em;
+    font-size: 1em;
     border: none;   
     float: right;
 }
@@ -64,7 +64,7 @@ button {
     width: 100%;
 }
 #progressbar.animated div {
-    animation: reveal 20s linear;
+    animation: reveal 1s linear;
 }
 
 @keyframes reveal {
@@ -86,17 +86,13 @@ button {
     text-align: center;
     background: transparent;
 }
-#roll.throwactive {
+#roll.hidden {
     display: none;
 }
 
 #rollresults {
     margin: 1em 0;
     text-align: center;
-}
-
-#rollresults.hidden {
-    display: none;
 }
 
 #rollresults button {
@@ -147,7 +143,7 @@ button {
 #errorfield {
     background: firebrick;
     color: #fff;
-    font-size: 1.5em;
+    font-size: 1em;
     margin: 5px 0;
     padding: 5px 10px;
     display: block;
@@ -168,6 +164,53 @@ button {
 .error {
     color: red;
 }
+.hidden {
+    display: none;
+}
+#playerlist {
+    display: inline-block;
+}
+#playerlist .currentplayer {
+    background: peachpuff;
+}
+#playerlist span {
+    display: inline-block;
+    padding: 2px 5px;
+    margin-right: 5px;
+}
+#playername {
+    display: none;
+    border: none;
+    background: #eee;
+    padding: 2px 5px;
+    font-size: 0.8em;
+    margin: 0;
+    width: 4em;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+#playername.show {
+    display: inline-block;
+}
+
+#playerlist ul {
+    margin: 0;
+    padding: 0;
+    display: inline-block;
+}
+#playerlist a {
+    text-decoration: none;
+    display: inline-block;
+    padding: 4px;
+}
+#playerlist li {
+    font-size: 0.8em;
+    margin-right: 5px;
+    padding: 2px 5px;
+    background: #eee;
+    display: inline-block;
+}
+
+
 
 footer {
     display: block;

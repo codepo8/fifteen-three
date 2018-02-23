@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Fifteen-three</title>
+    <title>Fifteen in Three</title>
     <link rel="stylesheet" href="fifteen-three.css">
     <link rel="stylesheet" href="dice.css">
 </head>
@@ -35,12 +35,31 @@
         </div>
         <div id="errorfield"></div>
         <output id="calculation"></output>
+
         <div id="players">
-            <form>
-                <input type="button" value="player 1" data-score="0">
-                <button data-val="add">+</button>
-            </form>
+                <form id="playerlist">
+                    <ul>
+                        <!-- <li data-score="$score">
+                            $playername 
+                            <span>$score</span>
+                            <a href="">x</a>
+                         </li> -->
+                    </ul>
+                    <button id="addplayer">+</button>
+                    <input id="playername">
+                </form>
+            </div>
         </div>
+    </section>
+    <section id="gameover" class="hidden">
+        <h2>Game over</h2>
+        <ol>$scorelist</ol>
+        <button id="newgame" class="action">Play again!</button>
+    </section>
+    <section id="intro" class="hidden">
+        <h2>Intro</h2>
+        <ol>$scorelist</ol>
+        <button id="playgame" class="action">Play!</button>
     </section>
     <footer>
         &copy; Chris Heilmann + Anke Mehlert 2018, <a href="#credits">Credits</a> <a href="#credits">Source</a>
