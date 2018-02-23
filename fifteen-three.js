@@ -41,13 +41,13 @@ const init = () => {
     addplayerbutton.addEventListener('click', toggleplayerform);
     playerform.addEventListener('submit', addplayer);
     playerform.querySelector('ul').addEventListener('click', removeplayer);
+    addplayerbutton.innerHTML = players.length > 0 ? '+' : 'Add Player';
     setupgame();
 }
 
 const addplayer = (ev) => {
     ev.preventDefault();
     if (playername.value !== '') {
-        console.log(playername.value);
         players.push(
             {"name": playername.value, "score": 0}
         );
