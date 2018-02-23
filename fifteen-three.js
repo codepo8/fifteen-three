@@ -26,13 +26,6 @@ let currentplayer = 0;
 let players = localStorage.playercache ?  JSON.parse(localStorage.playercache) : [];
 
 const init = () => {
-
-    fetch('gameconfig.json').then(function(response) {
-        return response.text();
-      }).then(function(text) {
-        config = JSON.parse(text);
-    });
-
     restartbutton.addEventListener('click', setupgame);
     throwbutton.addEventListener('click', rollthem);
     rollresults.addEventListener('click', getdice);
@@ -41,8 +34,12 @@ const init = () => {
     addplayerbutton.addEventListener('click', toggleplayerform);
     playerform.addEventListener('submit', addplayer);
     playerform.querySelector('ul').addEventListener('click', removeplayer);
-    addplayerbutton.innerHTML = players.length > 0 ? '+' : 'Add Player';
-    setupgame();
+    fetch('gameconfig.json').then(function(response) {
+        return response.text();
+      }).then(function(text) {
+        config = JSON.parse(text);
+        setupgame();
+    });
 }
 
 const addplayer = (ev) => {
@@ -81,12 +78,19 @@ const populateplayers = (turn) => {
         item.dataset.num = k;
         item.dataset.score = 0;
         item.innerHTML= `
-            ${p.name}
+            ${p.name}:
             <span>${p.score}</span>
             <a data-num="${k}"href="#">x</a>
         `;
         list.appendChild(item);
     });
+    if (players.length > 0) {
+        addplayerbutton.classList.add('compact');
+        addplayerbutton.innerHTML = config.labels.buttons.addplayercompact;
+    }   else {
+        addplayerbutton.classList.remove('compact');
+        addplayerbutton.innerHTML = config.labels.buttons.addplayerfull;
+    }     
 };
 
 const getdice = (ev) => {

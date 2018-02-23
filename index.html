@@ -9,60 +9,75 @@
     <link rel="stylesheet" href="dice.css">
 </head>
 <body>
+ <header>
+    <h1>15 with 3</h1>
+    <a href="#intro">How to play</a>            
+</header>
+<section id="game">
+    <div id="progressbar"><div></div></div>
 
-        <header>
-                <h1>15 with 3</h1>
-                <a href="#intro">How to play</a>            
-            </header>
-        <section id="game">
-        <div id="progressbar"><div></div></div>
-        <div id="makeitso"><button id="roll">Roll the Dice</button></div>
-        <div id="rollresults">
-                <button id="die1" data-val="0"></button>
-                <button id="die2" data-val="0"></button>
-                <button id="die3" data-val="0"></button>
-                <output id="tomatch"></output>
-        </div>
-        <div id="operators">
-                <button data-val="+">+</button>
-                <button data-val="-">-</button>
-                <button data-val="*">*</button>
-                <button data-val="/">/</button>
-                <button data-val="(">(</button>
-                <button data-val=")">)</button>
-                <button data-val="delete">x</button>
-                <button data-val="done">=</button>
-        </div>
-        <div id="errorfield"></div>
-        <output id="calculation"></output>
+    <button id="roll">Roll the Dice</button>
 
-        <div id="players">
-            <form id="playerlist">
-                <ul>
-                    <!-- <li data-score="$score">
-                        $playername 
-                        <span>$score</span>
-                        <a href="">x</a>
-                    </li> -->
-                </ul>
-                <button id="addplayer">Add Player</button>
-                <input id="playername">
-            </form>
-        </div>
-    </section>
-    <section id="gameover" class="hidden">
-        <h2>Game over</h2>
-        <ol>$scorelist</ol>
-        <button id="newgame" class="action">Play again!</button>
-    </section>
-    <section id="intro" class="hidden">
-        <h2>Intro</h2>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolor blanditiis laudantium quia tempora ipsum. Assumenda culpa impedit totam mollitia blanditiis exercitationem dicta, voluptatum nesciunt aut sit rerum, dolorem voluptatibus vel!</p>
-        <button id="playgame" class="action">Play!</button>
-    </section>
-    <footer>
-        &copy; Chris Heilmann + Anke Mehlert 2018, <a href="#credits">Credits</a> <a href="#credits">Source</a>
-    </footer>
-    <script src="fifteen-three.js"></script>
+    <div id="rollresults">
+        <button id="die1" data-val="0"></button>
+        <button id="die2" data-val="0"></button>
+        <button id="die3" data-val="0"></button>
+        <output id="tomatch"></output>
+    </div>
+    
+    <div id="operators">
+        <button data-val="+">+</button>
+        <button data-val="-">-</button>
+        <button data-val="*">*</button>
+        <button data-val="/">/</button>
+        <button data-val="(">(</button>
+        <button data-val=")">)</button>
+        <button data-val="delete">x</button>
+        <button data-val="done">=</button>
+    </div>
+    
+    <div id="errorfield"></div>
+    
+    <output id="calculation"></output>
+
+    <div id="players">
+        <form id="playerlist">
+            <ul>
+                <!-- // Generated content: 
+                <li data-score="$score">
+                    $playername 
+                    <span>$score</span>
+                    <a href="">x</a>
+                </li>
+                -->
+            </ul>
+            <button id="addplayer">Add Player</button>
+            <input id="playername">
+        </form>
+    </div>
+  
+</section>
+
+<section id="gameover" class="hidden">
+    <h2>Game over</h2>
+    <ol>
+        <!-- // Generated content: 
+            <li>$playername: $score</li>
+         -->
+    </ol>
+    <button id="newgame" class="action">Play again!</button>
+</section>
+
+<section id="intro" class="hidden">
+    <h2>Intro</h2>
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolor blanditiis laudantium quia tempora ipsum. Assumenda culpa impedit totam mollitia blanditiis exercitationem dicta, voluptatum nesciunt aut sit rerum, dolorem voluptatibus vel!</p>
+    <button id="playgame" class="action">Play!</button>
+</section>
+
+<footer>
+    &copy; Chris Heilmann + Anke Mehlert 2018, <a href="#credits">Credits</a> <a href="#credits">Source</a>
+</footer>
+
+<script src="fifteen-three.js"></script>
 </body>
 </html>

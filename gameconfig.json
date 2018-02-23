@@ -6,6 +6,12 @@
         "invalidterm": "This is not a valid term",
         "outoftime": "Out of time :("
     },
+    "labels": {
+        "buttons": {
+            "addplayercompact": "+",
+            "addplayerfull": "Add Player"
+        }
+    },
     "gameendscore": 20,
     "winnerpatterns": {
         "111": [3,  "1 + 1 + 1"],

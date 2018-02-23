@@ -182,10 +182,14 @@ button {
     border: none;
     font-weight: bold;
     padding: 2px 5px;
-    font-size: 1.1em;
-    margin: 0;
+    margin: 0;    
+    font-size: 0.8em;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
+#addplayer.compact {
+    font-size: 1.1em;
+}
+
 #playername {
     display: none;
     border: none;
