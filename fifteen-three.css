@@ -1,3 +1,12 @@
+:root {
+    --countdown-time: 20s;
+    /* 
+        ^ this will be replaced with the 
+        value in the game config (roundtime)
+    */
+    --timer-width: 50;
+    --timer-height: 50;
+}
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     width: 100%;
@@ -82,13 +91,82 @@ button {
     width: 100%;
 }
 #progressbar.animated div {
-    animation: reveal 20s linear;
+    animation: reveal var(--countdown-time) linear;
 }
 
 @keyframes reveal {
     from {width: 100%;}
     to {width: 0;}
 }
+
+/* Radial timer */ 
+/* Heavily adapted from https://codepen.io/tamak/pen/DLvtF */
+.radial-timer {
+    border: 2px solid black;
+    border-radius: 50%;
+    overflow: hidden;
+    height: calc(var(--timer-height) * 1px);
+    width: calc(var(--timer-width) * 1px);
+    position: relative;
+    display: inline-block;
+    top: 30px;
+  }
+  .radial-timer .radial-timer-half {
+    height: calc(var(--timer-height) * 1px);
+    width: calc(var(--timer-width) * 1px / 2);
+    border-radius: calc(var(--timer-width) * 1px / 2) 0 0 calc(var(--timer-width) * 1px / 2);
+    background: red;
+    position: absolute;
+  }
+  .radial-timer .radial-timer-half:nth-of-type(2) {
+    z-index: 99999999;
+    -webkit-transform-origin: center right;
+    -webkit-transform: rotate(180deg);
+  }
+  .radial-timer .radial-timer-half:after {
+    content: "";
+    position: absolute;
+    background: white;
+    height: calc(var(--timer-height) * 1px * 2);
+    width: calc(var(--timer-width) * 1.5 * 1px);
+    left: calc(-1 * var(--timer-width) * 1px);
+    top: calc(-1 * var(--timer-height) / 2 * 1px);
+    transform-origin: center right;
+  }
+  .radial-timer.animated {
+    transform-origin: center right;
+  }
+  .radial-timer.animated .radial-timer-half:nth-of-type(1):after {
+    animation: rotateLeftMask var(--countdown-time) linear;
+  }
+  .radial-timer.animated .radial-timer-half:nth-of-type(2):after {
+    animation: rotateRightMask var(--countdown-time) linear;
+  }
+  @keyframes rotateLeftMask {
+    0% {
+      transform: rotate(0deg);
+    }
+    50% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(180deg);
+    }
+  }
+  @keyframes rotateRightMask {
+    0% {
+      transform: rotate(0deg);
+    }
+    50% {
+      transform: rotate(180deg);
+      visibility: hidden;
+    }
+    100% {
+      transform: rotate(180deg);
+      visibility: hidden;
+    }
+  }
+
 
 
 /* Dice field */
@@ -111,6 +189,7 @@ button {
 #rollresults {
     margin: 1em 0;
     text-align: center;
+    position: relative;
 }
 
 #rollresults button {
@@ -123,6 +202,8 @@ button {
 }
 
 #tomatch {
+    position: relative;
+    top: 20px;
     font-size: 1.5em;
 }
 
@@ -258,3 +339,6 @@ footer {
 footer a {
     color: #999;
 }
+
+
+  

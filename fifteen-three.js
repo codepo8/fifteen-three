@@ -1,3 +1,5 @@
+;(() => {
+
 /* DOM ELEMENTS */
 const throwbutton     = document.querySelector('#roll');
 const calculation     = document.querySelector('#calculation');
@@ -7,7 +9,7 @@ const die3            = document.querySelector('#die3');
 const operators       = document.querySelector('#operators');
 const errorfield      = document.querySelector('#errorfield');
 const rollresults     = document.querySelector('#rollresults');
-const progress        = document.querySelector('#progressbar');
+const progress        = document.querySelector('#radialtimer');
 const fullscore       = document.querySelector('#tomatch');
 const playersection   = document.querySelector('#players');
 const addplayerbutton = document.querySelector('#addplayer');
@@ -23,7 +25,7 @@ const roundlabel      = document.querySelector('#rounds');
 
 let currentterm = '';
 let config = {};
-let movetime = null;
+let runningtimer = null;
 let currentplayer = 0;
 let players = localStorage.playercache ?  JSON.parse(localStorage.playercache) : [];
 
@@ -32,7 +34,7 @@ const init = () => {
     throwbutton.addEventListener('click', rollthem);
     rollresults.addEventListener('click', getdice);
     operators.addEventListener('click', operatorfunctions);
-    progress.addEventListener('animationend' ,outoftime);
+    progress.querySelector('div').addEventListener('animationend' ,outoftime);
     addplayerbutton.addEventListener('click', toggleplayerform);
     playerform.addEventListener('submit', addplayer);
     playerform.querySelector('ul').addEventListener('click', removeplayer);
@@ -178,8 +180,7 @@ const operatorfunctions = (ev) => {
             calculation.classList.remove('error');
             errorfield.className = 'hidden';
             throwbutton.className = ''; 
-            progressbar.classList.remove('animated');
-    
+            cancelcountdown();
         }
         return;
     }
@@ -189,8 +190,7 @@ const operatorfunctions = (ev) => {
 }
 
 const rollthem = (ev) => {
-    progress.className = 'animated';
-    // timer(20000); - maybe later :) 
+    startcountdown();
     let valueone = throwdice();
     let valuetwo = throwdice();
     let valuethree = throwdice();
@@ -213,9 +213,9 @@ const rollthem = (ev) => {
 };
 
 /* Error / Game End Handling */
-const outoftime = () => {
+const outoftime = (ev) => {
     operators.className = 'hidden';
-    progress.className = '';
+    progress.classList.remove('animated');
     rollresults.className = 'hidden';
     errorfield.innerHTML = config.errormessages.outoftime;
     errorfield.className = '';
@@ -243,12 +243,13 @@ const gameover = () => {
 /* HELPER FUNCTIONS */
 
 const cancelcountdown = () => {
-
+    progress.classList.remove('animated');
+    window.clearTimeout(runningtimer);
 }
 
-const timer = (seconds) => {
-    let now = new Date();
-    movetime = window.setTimeout(outoftime, seconds);
+const startcountdown = () => {
+    progress.classList.add('animated');
+    //runningtimer = window.setTimeout(outoftime, config.roundtime);
 };
 
 const clearmove = () => {
@@ -269,6 +270,9 @@ const setsection = (stateid) => {
     stateid.classList.remove('hidden');
 }
 const setupgame = (ev) => {
+    document.documentElement.style.setProperty(
+        '--countdown-time', config.roundtime + 's'
+    );    
     players.forEach(p => {
         p.score = 0;
     });
@@ -313,3 +317,4 @@ const throwdice = () => {
 
 window.addEventListener('DOMContentLoaded', init);
 
+})();

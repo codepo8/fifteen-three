@@ -14,12 +14,18 @@
     <a href="#intro">How to play</a>            
 </header>
 <section id="game">
-    <div id="progressbar"><div></div></div>
-
+    <!-- <div id="timer"></div> -->
+    <!-- <div id="progressbar"><div></div></div> -->
     <button id="roll">Roll the Dice</button>
 
+
+
     <div id="rollresults">
-        <button id="die1" data-val="0"></button>
+            <div class="radial-timer s-animate" id="radialtimer">
+                    <div class="radial-timer-half"></div>
+                    <div class="radial-timer-half"></div>
+            </div>
+                <button id="die1" data-val="0"></button>
         <button id="die2" data-val="0"></button>
         <button id="die3" data-val="0"></button>
         <output id="tomatch"></output>
@@ -90,8 +96,7 @@
 
 <section id="credits" class="hidden">
     <h2>Credits</h2>
-    <p>Using <a href="https://github.com/diafygi/dice-css">Dice-CSS</a> by <a href="https://github.com/diafygi">Daniel Roesler</a>
-
+    <p>Using <a href="https://github.com/diafygi/dice-css">Dice-CSS</a> by <a href="https://github.com/diafygi">Daniel Roesler</a> and <a href="Heavily adapted from https://codepen.io/tamak/pen/DLvtF">this radial timer animation</a>     
     </p>
     <button class="action">Play!</button>
 </section>
