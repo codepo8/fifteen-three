@@ -296,7 +296,7 @@ const setupgame = (ev) => {
 
 const setuptextscreens = (screendata) => {
     screendata.forEach((s) => {
-        document.querySelector('a[href="#' + s[0] +  '"').addEventListener('click', (ev) => {
+        document.querySelector('a[href="#' + s[0] +  '"]').addEventListener('click', (ev) => {
             ev.preventDefault();
             setsection(s[1]);
         });
