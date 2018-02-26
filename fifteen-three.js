@@ -1,4 +1,4 @@
-
+// @ts-check
 /* DOM ELEMENTS */
 const throwbutton     = document.querySelector('#roll');
 const calculation     = document.querySelector('#calculation');
@@ -15,13 +15,14 @@ const addplayerbutton = document.querySelector('#addplayer');
 const playerform      = document.querySelector('#playerlist');
 const playername      = document.querySelector('#playername');
 const restartbutton   = document.querySelector('#newgame');
-const playbutton      = document.querySelector('#playgame');
 const gamescreen      = document.querySelector('#game');
+const creditscreen    = document.querySelector('#credits');
 const introscreen     = document.querySelector('#intro');
 const gameoverscreen  = document.querySelector('#gameover');
 
 let currentterm = '';
 let config = {};
+let movetime = null;
 let currentplayer = 0;
 let players = localStorage.playercache ?  JSON.parse(localStorage.playercache) : [];
 
@@ -30,10 +31,11 @@ const init = () => {
     throwbutton.addEventListener('click', rollthem);
     rollresults.addEventListener('click', getdice);
     operators.addEventListener('click', operatorfunctions);
-    progressbar.addEventListener('animationend' ,outoftime);
+    progress.addEventListener('animationend' ,outoftime);
     addplayerbutton.addEventListener('click', toggleplayerform);
     playerform.addEventListener('submit', addplayer);
     playerform.querySelector('ul').addEventListener('click', removeplayer);
+    setuptextscreens([['intro', introscreen],['credits', creditscreen]])
     fetch('gameconfig.json').then(function(response) {
         return response.text();
       }).then(function(text) {
@@ -57,7 +59,7 @@ const addplayer = (ev) => {
 const removeplayer = (ev) => {
     let t = ev.target;
     if (t.tagName === "A" && t.parentNode.tagName === 'LI') {
-        let deadplayer = players.splice(t.dataset.num, 1)
+        let deadplayer = players.splice(t.dataset.num, 1);
         populateplayers(currentplayer);
     }
     ev.preventDefault();
@@ -66,6 +68,12 @@ const toggleplayerform = (ev) => {
     playername.classList.toggle('show');
     playername.focus();
 }
+
+const timer = (seconds) => {
+    let now = new Date();
+    movetime = window.setTimeout(outoftime, seconds);
+};
+
 const populateplayers = (turn) => {
     localStorage.playercache = JSON.stringify(players);
     playerform.querySelector('ul').innerHTML = '';
@@ -76,7 +84,7 @@ const populateplayers = (turn) => {
             item.classList.add('currentplayer');
         }
         item.dataset.num = k;
-        item.dataset.score = 0;
+        item.dataset.score = '0';
         item.innerHTML= `
             ${p.name}:
             <span>${p.score}</span>
@@ -164,6 +172,7 @@ const advanceplayers = () => {
             gameover();
         } else {
             currentplayer = (currentplayer + 1) % players.length;
+            throwbutton.innerHTML = players[currentplayer].name + ', roll the dice!';
             populateplayers(currentplayer);
        }
     }
@@ -183,6 +192,7 @@ const gameover = () => {
 
 const rollthem = (ev) => {
     progress.className = 'animated';
+    // timer(20000); - maybe later :) 
     let valueone = throwdice();
     let valuetwo = throwdice();
     let valuethree = throwdice();
@@ -231,9 +241,9 @@ const outoftime = () => {
  }
 
 const setsection = (stateid) => {
-    [gameoverscreen, gamescreen, introscreen].forEach(s => {
+    [gameoverscreen, gamescreen, introscreen, creditscreen].forEach(s => {
         s.classList.add('hidden');
-    })
+    });
     stateid.classList.remove('hidden');
 }
 const setupgame = (ev) => {
@@ -251,8 +261,26 @@ const setupgame = (ev) => {
     rollresults.classList.add('hidden');
     errorfield.innerHTML = '';
     calculation.innerHTML = '';
+    throwbutton.innerHTML = players.length > 0 ?
+        config.labels.buttons.multiplayerroll.replace(
+            '$name', players[currentplayer].name
+        ): 
+        config.labels.buttons.singleplayerroll;
     setsection(gamescreen);
     if (ev) {ev.preventDefault()}
+};
+
+const setuptextscreens = (screendata) => {
+    screendata.forEach((s) => {
+        document.querySelector('a[href="#' + s[0] +  '"').addEventListener('click', (ev) => {
+            ev.preventDefault();
+            setsection(s[1]);
+        });
+        document.querySelector('#' + s[0] + ' button').addEventListener('click', (ev) => {
+            ev.preventDefault();
+            setsection(gamescreen);
+        });
+    });
 };
 
 const throwdice = () => {

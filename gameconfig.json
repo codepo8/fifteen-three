@@ -9,7 +9,9 @@
     "labels": {
         "buttons": {
             "addplayercompact": "+",
-            "addplayerfull": "Add Player"
+            "addplayerfull": "Add Player",
+            "singleplayerroll": "Roll the dice",
+            "multiplayerroll": "$name, roll the dice"
         }
     },
     "gameendscore": 20,
