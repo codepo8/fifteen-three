@@ -18,6 +18,7 @@ const gamescreen      = document.querySelector('#game');
 const creditscreen    = document.querySelector('#credits');
 const introscreen     = document.querySelector('#intro');
 const gameoverscreen  = document.querySelector('#gameover');
+const turnmessage     = document.querySelector('#turnmessage')
 
 let currentterm = '';
 let config = {};
@@ -172,13 +173,18 @@ const advanceplayers = () => {
             gameover();
         } else {
             currentplayer = (currentplayer + 1) % players.length;
+            if (currentplayer === 0) {
+                game.turns++;
+            }
             throwbutton.innerHTML = players[currentplayer].name + ', roll the dice!';
             populateplayers(currentplayer);
        }
     }
+    console.log(game.turns);
 }
 const gameover = () => {
     setsection(gameoverscreen);
+    turnmessage.innerHTML = config.messages.gameoverturnmessage.replace('$turns', game.turns);
     let playerscore = players.slice(0);
     playerscore.sort((a,b) => {
         return a.score > b.score
@@ -252,6 +258,7 @@ const setupgame = (ev) => {
     });
     currentplayer = 0;
     currentterm = '';
+    game.turns = 1;
     populateplayers(currentplayer);
     [throwbutton, operators, calculation, playersection].forEach(s => {
         s.classList.remove('hidden');

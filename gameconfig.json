@@ -6,6 +6,9 @@
         "invalidterm": "This is not a valid term",
         "outoftime": "Out of time :("
     },
+    "messages": {
+        "gameoverturnmessage": "Well, that's that! You survived $turns rounds."
+    },
     "labels": {
         "buttons": {
             "addplayercompact": "+",

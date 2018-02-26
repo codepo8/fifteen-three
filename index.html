@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Fifteen in Three</title>
+    <title>Fifteen with Three</title>
     <link rel="stylesheet" href="fifteen-three.css">
     <link rel="stylesheet" href="dice.css">
 </head>
@@ -60,6 +60,7 @@
 
 <section id="gameover" class="hidden">
     <h2>Game over</h2>
+    <p id="turnmessage">Well, that's that! You survived $turns turns.</p>
     <ol>
         <!-- // Generated content: 
             <li>$playername: $score</li>
@@ -69,8 +70,18 @@
 </section>
 
 <section id="intro" class="hidden">
-    <h2>Intro</h2>
-    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolor blanditiis laudantium quia tempora ipsum. Assumenda culpa impedit totam mollitia blanditiis exercitationem dicta, voluptatum nesciunt aut sit rerum, dolorem voluptatibus vel!</p>
+    <h2>How to play</h2>
+    <p>15 with three is a seemingly simple game, but looks can be deceiving. Your job is to roll three dice and find a way to reach 15 at the most. You can use all the basic math operators like plus, minus, divide and multiply and you can use brackets.</p>
+    <p>For example when you have the following sequence of one, two and five:
+    <span class="dicedemo"><span class="dice dice-1"></span><span class="dice dice-2"></span><span class="dice dice-5"></span></span></p>
+    <p>You will probably be inclined to add them up to reach eight: <span class="calcdemo">1 + 2 + 5 = 8</span>. You can, however, reach 15 if you add and multiply instead <span class="calcdemo">(1 + 2) * 5 = 15</span>. It is worth-while thinking differently and not giving in to the first idea.</p>
+    <ul>
+        <li>In each move you have twenty seconds to find the best result.</li>
+        <li>The game shows the highest possible value next to the dice.</li>
+        <li>If you fail to reach that you get the remainder as points, so, for example, if 15 is the highest possible value and you reach 10, you get 5 points. If you run out of time, you get the highest possible value.</li>
+        <li>Once you reached 20, the game is over</li>
+    </ul>
+     <p>You can play the game by yourself or against other players. Simply add as many players as you want to and you'll play in turns. You can also remove players by clicking the x next to their name.</p>
     <button class="action">Play!</button>
 </section>
 
@@ -86,7 +97,7 @@
 <footer>
     &copy; Chris Heilmann + Anke Mehlert 2018, <a href="#credits">Credits</a> <a href="#credits">Source</a>
 </footer>
-
+<script src="serviceworkers.js"></script>
 <script src="fifteen-three.js"></script>
 </body>
 </html>
