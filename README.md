@@ -3,4 +3,4 @@ A dice game in the making
 
 
 
-* Using [https://github.com/diafygi/dice-css](Dice-CSS) by [https://github.com/diafygi](Daniel Roesler) for die display
+* Using [Dice-CSS]([https://github.com/diafygi/dice-css]) by [Daniel Roesler](https://github.com/diafygi) for die display
