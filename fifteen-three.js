@@ -1,4 +1,3 @@
-// @ts-check
 /* DOM ELEMENTS */
 const throwbutton     = document.querySelector('#roll');
 const calculation     = document.querySelector('#calculation');
@@ -64,6 +63,7 @@ const removeplayer = (ev) => {
     }
     ev.preventDefault();
 }
+
 const toggleplayerform = (ev) => {
     playername.classList.toggle('show');
     playername.focus();
@@ -287,6 +287,5 @@ const throwdice = () => {
     return ~~(Math.random() * 6) + 1;
 }
 
-/* EVENT HANDLERS */
 window.addEventListener('DOMContentLoaded', init);
 
