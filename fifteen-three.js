@@ -19,6 +19,7 @@ const creditscreen    = document.querySelector('#credits');
 const introscreen     = document.querySelector('#intro');
 const gameoverscreen  = document.querySelector('#gameover');
 const turnmessage     = document.querySelector('#turnmessage')
+const roundlabel      = document.querySelector('#rounds');
 
 let currentterm = '';
 let config = {};
@@ -35,7 +36,10 @@ const init = () => {
     addplayerbutton.addEventListener('click', toggleplayerform);
     playerform.addEventListener('submit', addplayer);
     playerform.querySelector('ul').addEventListener('click', removeplayer);
-    setuptextscreens([['intro', introscreen],['credits', creditscreen]])
+    setuptextscreens([
+        ['intro', introscreen],
+        ['credits', creditscreen]
+    ]);
     fetch('gameconfig.json').then(function(response) {
         return response.text();
       }).then(function(text) {
@@ -45,7 +49,6 @@ const init = () => {
 }
 
 /* Player controls */
-
 const addplayer = (ev) => {
     ev.preventDefault();
     if (playername.value !== '') {
@@ -107,6 +110,7 @@ const advanceplayers = () => {
             currentplayer = (currentplayer + 1) % players.length;
             if (currentplayer === 0) {
                 game.turns++;
+                updaterounds();
             }
             throwbutton.innerHTML = players[currentplayer].name + ', roll the dice!';
             populateplayers(currentplayer);
@@ -114,8 +118,11 @@ const advanceplayers = () => {
     }
 }
 
-/* Dice controls */
+const updaterounds = () => {
+    roundlabel.innerHTML = config.labels.rounds.replace('$round', game.turns);
+ };
 
+/* Dice controls */
 const getdice = (ev) => {
     let t = ev.target;
     if (t.tagName !== 'BUTTON') {return;}
@@ -206,7 +213,6 @@ const rollthem = (ev) => {
 };
 
 /* Error / Game End Handling */
-
 const outoftime = () => {
     operators.className = 'hidden';
     progress.className = '';
@@ -235,6 +241,10 @@ const gameover = () => {
 }
 
 /* HELPER FUNCTIONS */
+
+const cancelcountdown = () => {
+
+}
 
 const timer = (seconds) => {
     let now = new Date();
@@ -265,6 +275,7 @@ const setupgame = (ev) => {
     currentplayer = 0;
     currentterm = '';
     game.turns = 1;
+    updaterounds();
     populateplayers(currentplayer);
     [throwbutton, operators, calculation, playersection].forEach(s => {
         s.classList.remove('hidden');

@@ -244,6 +244,10 @@ button {
     display: inline-block;
 }
 
+#rounds {
+    float: right;
+}
+
 footer {
     display: block;
     font-size: 0.5em;

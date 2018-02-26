@@ -15,7 +15,8 @@
             "addplayerfull": "Add Player",
             "singleplayerroll": "Roll the dice",
             "multiplayerroll": "$name, roll the dice"
-        }
+        },
+        "rounds": "Round: $round"
     },
     "gameendscore": 20,
     "winnerpatterns": {
