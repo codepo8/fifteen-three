@@ -44,6 +44,8 @@ const init = () => {
     });
 }
 
+/* Player controls */
+
 const addplayer = (ev) => {
     ev.preventDefault();
     if (playername.value !== '') {
@@ -69,11 +71,6 @@ const toggleplayerform = (ev) => {
     playername.classList.toggle('show');
     playername.focus();
 }
-
-const timer = (seconds) => {
-    let now = new Date();
-    movetime = window.setTimeout(outoftime, seconds);
-};
 
 const populateplayers = (turn) => {
     localStorage.playercache = JSON.stringify(players);
@@ -101,6 +98,23 @@ const populateplayers = (turn) => {
         addplayerbutton.innerHTML = config.labels.buttons.addplayerfull;
     }     
 };
+
+const advanceplayers = () => {
+    if (players.length > 0) {
+        if (players[currentplayer].score >= config.gameendscore) {
+            gameover();
+        } else {
+            currentplayer = (currentplayer + 1) % players.length;
+            if (currentplayer === 0) {
+                game.turns++;
+            }
+            throwbutton.innerHTML = players[currentplayer].name + ', roll the dice!';
+            populateplayers(currentplayer);
+       }
+    }
+}
+
+/* Dice controls */
 
 const getdice = (ev) => {
     let t = ev.target;
@@ -167,35 +181,6 @@ const operatorfunctions = (ev) => {
     ev.preventDefault();
 }
 
-const advanceplayers = () => {
-    if (players.length > 0) {
-        if (players[currentplayer].score >= config.gameendscore) {
-            gameover();
-        } else {
-            currentplayer = (currentplayer + 1) % players.length;
-            if (currentplayer === 0) {
-                game.turns++;
-            }
-            throwbutton.innerHTML = players[currentplayer].name + ', roll the dice!';
-            populateplayers(currentplayer);
-       }
-    }
-    console.log(game.turns);
-}
-const gameover = () => {
-    setsection(gameoverscreen);
-    turnmessage.innerHTML = config.messages.gameoverturnmessage.replace('$turns', game.turns);
-    let playerscore = players.slice(0);
-    playerscore.sort((a,b) => {
-        return a.score > b.score
-    });
-    let out = '';
-    playerscore.forEach((p) => {
-        out += `<li>${p.name}: ${p.score}</li>`;
-    });
-    gameoverscreen.querySelector('ol').innerHTML = out;
-}
-
 const rollthem = (ev) => {
     progress.className = 'animated';
     // timer(20000); - maybe later :) 
@@ -220,6 +205,8 @@ const rollthem = (ev) => {
     ev.preventDefault();
 };
 
+/* Error / Game End Handling */
+
 const outoftime = () => {
     operators.className = 'hidden';
     progress.className = '';
@@ -233,9 +220,28 @@ const outoftime = () => {
     advanceplayers();
 }
 
+const gameover = () => {
+    setsection(gameoverscreen);
+    turnmessage.innerHTML = config.messages.gameoverturnmessage.replace('$turns', game.turns);
+    let playerscore = players.slice(0);
+    playerscore.sort((a,b) => {
+        return a.score > b.score
+    });
+    let out = '';
+    playerscore.forEach((p) => {
+        out += `<li>${p.name}: ${p.score}</li>`;
+    });
+    gameoverscreen.querySelector('ol').innerHTML = out;
+}
+
 /* HELPER FUNCTIONS */
 
- const clearmove = () => {
+const timer = (seconds) => {
+    let now = new Date();
+    movetime = window.setTimeout(outoftime, seconds);
+};
+
+const clearmove = () => {
     errorfield.innerHTML = '';
     calculation.innerHTML = '';
     currentterm = '';
@@ -244,7 +250,7 @@ const outoftime = () => {
     die1.classList.remove('selected');
     die2.classList.remove('selected');
     die3.classList.remove('selected');
- }
+}
 
 const setsection = (stateid) => {
     [gameoverscreen, gamescreen, introscreen, creditscreen].forEach(s => {
