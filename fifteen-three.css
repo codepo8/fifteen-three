@@ -4,8 +4,10 @@
         ^ this will be replaced with the 
         value in the game config (roundtime)
     */
-    --timer-width: 50;
-    --timer-height: 50;
+    --timer-size: 50;
+    --timer-width: 4;
+    --timer-colour: firebrick;
+    --timer-cover-colour: #fff;
 }
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -102,72 +104,64 @@ button {
 /* Radial timer */ 
 /* Heavily adapted from https://codepen.io/tamak/pen/DLvtF */
 .radial-timer {
-    border: 2px solid black;
-    border-radius: 50%;
     overflow: hidden;
-    height: calc(var(--timer-height) * 1px);
-    width: calc(var(--timer-width) * 1px);
-    position: relative;
     display: inline-block;
+    height: calc(var(--timer-size) * 1px);
+    width: calc(var(--timer-size) * 1px);
+    position: relative;
     top: 30px;
-  }
-  .radial-timer .radial-timer-half {
-    height: calc(var(--timer-height) * 1px);
-    width: calc(var(--timer-width) * 1px / 2);
-    border-radius: calc(var(--timer-width) * 1px / 2) 0 0 calc(var(--timer-width) * 1px / 2);
-    background: red;
+}
+.radial-timer .radial-timer-half {
+    height: calc(var(--timer-size) * 1px);
+    width: calc(var(--timer-size) / 2 * 1px);
+    border-radius: calc(var(--timer-size) / 2 * 1px) 0 0 calc( var(--timer-size) / 2 * 1px);
+    background: var(--timer-colour);
     position: absolute;
-  }
-  .radial-timer .radial-timer-half:nth-of-type(2) {
-    z-index: 99999999;
-    -webkit-transform-origin: center right;
-    -webkit-transform: rotate(180deg);
-  }
-  .radial-timer .radial-timer-half:after {
+}
+.radial-timer .radial-timer-half:nth-of-type(2) {
+    z-index: 3;
+    transform-origin: center right;
+    transform: rotate(180deg);
+}
+.radial-timer .radial-timer-half:before {
     content: "";
     position: absolute;
-    background: white;
-    height: calc(var(--timer-height) * 1px * 2);
-    width: calc(var(--timer-width) * 1.5 * 1px);
-    left: calc(-1 * var(--timer-width) * 1px);
-    top: calc(-1 * var(--timer-height) / 2 * 1px);
+    top: calc(var(--timer-width) * 1px);
+    left: calc(var(--timer-width) * 1px);
+    height: calc((var(--timer-size) - var(--timer-width) * 2) * 1px);
+    width: calc(((var(--timer-size) - var(--timer-width) * 2) / 2) * 1px);
+    border-radius: calc((var(--timer-size) - var(--timer-width))/2 * 1px) 0 0 calc((var(--timer-size) - var(--timer-width))/2 * 1px);
+    background: var(--timer-cover-colour);
+}
+.radial-timer .radial-timer-half:after {
+    content: "";
+    position: absolute;
+    background: var(--timer-cover-colour);
+    height: calc(var(--timer-size) * 2 * 1px);
+    width: calc(var(--timer-size) * 1.5 * 1px);
+    left: calc(var(--timer-size) * -1px);
+    top: calc((var(--timer-size) / 2) * -1px);
     transform-origin: center right;
-  }
-  .radial-timer.animated {
+}
+.radial-timer.animated {
     transform-origin: center right;
-  }
-  .radial-timer.animated .radial-timer-half:nth-of-type(1):after {
+}
+.radial-timer.animated .radial-timer-half:nth-of-type(1):after {
     animation: rotateLeftMask var(--countdown-time) linear;
-  }
-  .radial-timer.animated .radial-timer-half:nth-of-type(2):after {
+}
+.radial-timer.animated .radial-timer-half:nth-of-type(2):after {
     animation: rotateRightMask var(--countdown-time) linear;
-  }
-  @keyframes rotateLeftMask {
-    0% {
-      transform: rotate(0deg);
-    }
-    50% {
-      transform: rotate(0deg);
-    }
-    100% {
-      transform: rotate(180deg);
-    }
-  }
-  @keyframes rotateRightMask {
-    0% {
-      transform: rotate(0deg);
-    }
-    50% {
-      transform: rotate(180deg);
-      visibility: hidden;
-    }
-    100% {
-      transform: rotate(180deg);
-      visibility: hidden;
-    }
-  }
-
-
+}
+@keyframes rotateLeftMask {
+    0% {transform: rotate(0deg);}
+    50% {transform: rotate(0deg);}
+    100% {transform: rotate(180deg);}
+}
+@keyframes rotateRightMask {
+    0% {transform: rotate(0deg);}
+    50% {transform: rotate(180deg);visibility: hidden;}
+    100% {transform: rotate(180deg);visibility: hidden;}
+}
 
 /* Dice field */
 
@@ -203,8 +197,8 @@ button {
 
 #tomatch {
     position: relative;
-    top: 20px;
-    font-size: 1.5em;
+    z-index: 20;
+    font-size: 1.2em;
 }
 
 .selected {
