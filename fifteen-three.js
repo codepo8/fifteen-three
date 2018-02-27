@@ -195,7 +195,7 @@ const rollthem = (ev) => {
     let valuetwo = throwdice();
     let valuethree = throwdice();
     let valuematch = [valueone, valuetwo, valuethree].sort();
-    fullscore.innerHTML = config.winnerpatterns[valuematch.join('')][0];
+    fullscore.innerHTML = '=' + config.winnerpatterns[valuematch.join('')][0];
     fullscore.dataset.bestvalue = config.winnerpatterns[valuematch.join('')][0];
     die1.title = die1.dataset.val = valueone;
     die2.title = die2.dataset.val = valuetwo;

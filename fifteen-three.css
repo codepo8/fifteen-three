@@ -4,8 +4,9 @@
         ^ this will be replaced with the 
         value in the game config (roundtime)
     */
-    --timer-size: 50;
+    --timer-size: 70;
     --timer-width: 4;
+    --timer-r: calc((var(--timer-size) - var(--timer-width))*.5px);
     --timer-colour: firebrick;
     --timer-cover-colour: #fff;
 }
@@ -103,6 +104,12 @@ button {
 
 /* Radial timer */ 
 /* Heavily adapted from https://codepen.io/tamak/pen/DLvtF */
+#tomatch {
+    position: relative;
+    z-index: 20;
+    top: 12px;
+    font-size: 1.2em;
+}
 .radial-timer {
     overflow: hidden;
     display: inline-block;
@@ -110,11 +117,14 @@ button {
     width: calc(var(--timer-size) * 1px);
     position: relative;
     top: 30px;
+    text-align: center;
+    border: 2px solid #ccc;
+    border-radius: 50%;
 }
 .radial-timer .radial-timer-half {
     height: calc(var(--timer-size) * 1px);
     width: calc(var(--timer-size) / 2 * 1px);
-    border-radius: calc(var(--timer-size) / 2 * 1px) 0 0 calc( var(--timer-size) / 2 * 1px);
+    border-radius: var(--timer-r) 0 0 var(--timer-r);
     background: var(--timer-colour);
     position: absolute;
 }
@@ -193,12 +203,6 @@ button {
 
 #die1, #die2, #die3 {
     font-size: 4em;
-}
-
-#tomatch {
-    position: relative;
-    z-index: 20;
-    font-size: 1.2em;
 }
 
 .selected {
