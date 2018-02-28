@@ -107,8 +107,10 @@ button {
 #tomatch {
     position: relative;
     z-index: 20;
-    top: 12px;
-    font-size: 1.2em;
+    display: inline-block;
+    line-height: 60px;
+    height: calc(var(--timer-size) * 1px);
+    font-size: 1em;
 }
 .radial-timer {
     overflow: hidden;
@@ -116,7 +118,6 @@ button {
     height: calc(var(--timer-size) * 1px);
     width: calc(var(--timer-size) * 1px);
     position: relative;
-    top: 30px;
     text-align: center;
     border: 2px solid #ccc;
     border-radius: 50%;
@@ -155,12 +156,17 @@ button {
 }
 .radial-timer.animated {
     transform-origin: center right;
+    animation: dummy var(--countdown-time) linear;
 }
 .radial-timer.animated .radial-timer-half:nth-of-type(1):after {
     animation: rotateLeftMask var(--countdown-time) linear;
 }
 .radial-timer.animated .radial-timer-half:nth-of-type(2):after {
     animation: rotateRightMask var(--countdown-time) linear;
+}
+@keyframes dummy {
+    from {top: 0;}
+    to { top: 0;}
 }
 @keyframes rotateLeftMask {
     0% {transform: rotate(0deg);}
@@ -191,11 +197,25 @@ button {
 }
 
 #rollresults {
-    margin: 1em 0;
+    margin: 1em auto;
     text-align: center;
-    position: relative;
+    max-width: 25em;
 }
-
+.flexgrid {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    align-content: center;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+.slot {
+    float: left;
+    padding: 0 10px;
+    text-align: center;
+    display: flex;
+    flex: 0 1 auto;
+}
 #rollresults button {
     padding: .5em;
     border: none;

@@ -34,7 +34,7 @@ const init = () => {
     throwbutton.addEventListener('click', rollthem);
     rollresults.addEventListener('click', getdice);
     operators.addEventListener('click', operatorfunctions);
-    progress.querySelector('div').addEventListener('animationend' ,outoftime);
+    progress.addEventListener('animationend' ,outoftime);
     addplayerbutton.addEventListener('click', toggleplayerform);
     playerform.addEventListener('submit', addplayer);
     playerform.querySelector('ul').addEventListener('click', removeplayer);
@@ -214,16 +214,18 @@ const rollthem = (ev) => {
 
 /* Error / Game End Handling */
 const outoftime = (ev) => {
-    operators.className = 'hidden';
-    progress.classList.remove('animated');
-    rollresults.className = 'hidden';
-    errorfield.innerHTML = config.errormessages.outoftime;
-    errorfield.className = '';
-    throwbutton.className = '';
-    if (players.length > 0) {
-        players[currentplayer].score += +fullscore.dataset.bestvalue;
+    if (ev && ev.animationName === 'dummy') {
+        operators.className = 'hidden';
+        progress.classList.remove('animated');
+        rollresults.className = 'hidden';
+        errorfield.innerHTML = config.errormessages.outoftime;
+        errorfield.className = '';
+        throwbutton.className = '';
+        if (players.length > 0) {
+            players[currentplayer].score += +fullscore.dataset.bestvalue;
+        }
+        advanceplayers();        
     }
-    advanceplayers();
 }
 
 const gameover = () => {
@@ -244,7 +246,7 @@ const gameover = () => {
 
 const cancelcountdown = () => {
     progress.classList.remove('animated');
-    window.clearTimeout(runningtimer);
+    //window.clearTimeout(runningtimer);
 }
 
 const startcountdown = () => {

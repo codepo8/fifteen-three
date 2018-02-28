@@ -21,13 +21,23 @@
 
 
     <div id="rollresults">
-        <button id="die1" data-val="0"></button>
-        <button id="die2" data-val="0"></button>
-        <button id="die3" data-val="0"></button>
-        <div class="radial-timer s-animate" id="radialtimer">
-            <div class="radial-timer-half"></div>
-            <div class="radial-timer-half"></div>
-            <output id="tomatch"></output>
+        <div class="flexgrid">
+            <div class="slot">
+                <button id="die1" data-val="0"></button>
+            </div>
+            <div class="slot">
+                <button id="die2" data-val="0"></button>
+            </div>
+            <div class="slot">
+                <button id="die3" data-val="0"></button>
+            </div>
+            <div class="slot">
+                <div class="radial-timer s-animate" id="radialtimer">
+                    <div class="radial-timer-half"></div>
+                    <div class="radial-timer-half"></div>
+                    <output id="tomatch"></output>
+                </div>
+            </div>
         </div>
     </div>
     
