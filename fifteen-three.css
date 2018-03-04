@@ -295,7 +295,7 @@ button {
 #calculation span {
     color: green;
     display: block;
-    margin: 5px;
+    margin: 5px; 
     text-align: center;
     font-size: 0.7em;
 }
