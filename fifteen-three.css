@@ -110,6 +110,7 @@ button {
     display: inline-block;
     line-height: 60px;
     height: calc(var(--timer-size) * 1px);
+    width: calc(var(--timer-size) * 1px);
     font-size: 1em;
 }
 .radial-timer {
@@ -119,8 +120,6 @@ button {
     width: calc(var(--timer-size) * 1px);
     position: relative;
     text-align: center;
-    border: 2px solid #ccc;
-    border-radius: 50%;
 }
 .radial-timer .radial-timer-half {
     height: calc(var(--timer-size) * 1px);
@@ -252,7 +251,17 @@ button {
     width: 1.5em;
     line-height: 1.3em;
     margin-bottom: .2em;
+    box-shadow: 2px 2px 5px #999;
 }
+#operators button:hover {
+    box-shadow: 1px 1px 3px #999;
+}
+#operators button:active {
+    background: lightgoldenrodyellow;
+    color: #000;
+    box-shadow: 1px 1px 3px #999;
+}
+
 #operators button[data-val="delete"] {
     background: pink;
 }
