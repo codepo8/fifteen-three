@@ -4,7 +4,8 @@
         "morethan15": "This is more than 15 :(",
         "lessthanzero": "This is less than zero :(",
         "invalidterm": "This is not a valid term",
-        "outoftime": "Out of time :("
+        "outoftime": "Out of time :(",
+        "notalldice": "You have to use all the dice"
     },
     "messages": {
         "gameoverturnmessage": "Well, that's that! You survived $turns rounds."

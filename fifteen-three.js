@@ -1,4 +1,4 @@
-;(() => {
+// ;(() => {
 
 /* DOM ELEMENTS */
 const throwbutton     = document.querySelector('#roll');
@@ -22,6 +22,8 @@ const introscreen     = document.querySelector('#intro');
 const gameoverscreen  = document.querySelector('#gameover');
 const turnmessage     = document.querySelector('#turnmessage')
 const roundlabel      = document.querySelector('#rounds');
+const countdowncheck  = document.querySelector('#timercheck');
+const hintcheck       = document.querySelector('#hintcheck');
 
 let currentterm = '';
 let config = {};
@@ -168,9 +170,20 @@ const operatorfunctions = (ev) => {
             calculation.className = 'error';
             errorfield.className = '';
         } 
+        // if ([die1,die2,die3].map(
+        //     d => {return (d.classList.contains('selected'))})
+        //     .includes(false)) {
+        //     errorfield.innerHTML = config.errormessages.notalldice;
+        //     calculation.className = 'error';
+        //     errorfield.className = '';
+        // }
         if (finalvalue >= 0 && finalvalue < 16) {
             calculation.innerHTML = currentterm + ' = ' + finalvalue;
             if (fullscore.dataset.bestvalue > finalvalue) {
+                if (hintcheck.checked) {
+                    calculation.innerHTML += `<span>${fullscore.dataset.term} = 
+                                            ${fullscore.dataset.bestvalue}</span>`;
+                }
                 if (players.length > 0) {
                     players[currentplayer].score += fullscore.dataset.bestvalue - finalvalue;
                 }
@@ -197,6 +210,7 @@ const rollthem = (ev) => {
     let valuematch = [valueone, valuetwo, valuethree].sort();
     fullscore.innerHTML = '=' + config.winnerpatterns[valuematch.join('')][0];
     fullscore.dataset.bestvalue = config.winnerpatterns[valuematch.join('')][0];
+    fullscore.dataset.term = config.winnerpatterns[valuematch.join('')][1];
     die1.title = die1.dataset.val = valueone;
     die2.title = die2.dataset.val = valuetwo;
     die3.title = die3.dataset.val = valuethree;
@@ -250,8 +264,10 @@ const cancelcountdown = () => {
 }
 
 const startcountdown = () => {
-    progress.classList.add('animated');
-    //runningtimer = window.setTimeout(outoftime, config.roundtime);
+    if (countdowncheck.checked) {
+        progress.classList.add('animated');
+        //runningtimer = window.setTimeout(outoftime, config.roundtime);
+    }
 };
 
 const clearmove = () => {
@@ -319,4 +335,4 @@ const throwdice = () => {
 
 window.addEventListener('DOMContentLoaded', init);
 
-})();
+// })();

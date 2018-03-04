@@ -179,6 +179,11 @@ button {
     100% {transform: rotate(180deg);visibility: hidden;}
 }
 
+.checkboxes {
+    text-align: right;
+    padding: 2px 5px;
+    font-size: 0.8em;    
+}
 /* Dice field */
 
 /* Roll the dice button */
@@ -277,6 +282,13 @@ button {
     font-size: 1.8em;
     letter-spacing: .1em;
     text-align: center;
+}
+#calculation span {
+    color: green;
+    display: block;
+    margin: 5px;
+    text-align: center;
+    font-size: 0.7em;
 }
 .error {
     color: red;
