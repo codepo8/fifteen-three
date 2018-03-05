@@ -130,7 +130,8 @@ const updaterounds = () => {
 const getdice = (ev) => {
     let t = ev.target;
     if (t.tagName !== 'BUTTON') {return;}
-    if (!t.classList.contains('selected')) {
+    if (!t.classList.contains('selected') && 
+        !/\d$/.test(currentterm)) {
         currentterm += t.dataset.val;
         calculation.innerHTML = currentterm;
         t.classList.add('selected');
@@ -170,13 +171,14 @@ const operatorfunctions = (ev) => {
             calculation.className = 'error';
             errorfield.className = '';
         } 
-        // if ([die1,die2,die3].map(
-        //     d => {return (d.classList.contains('selected'))})
-        //     .includes(false)) {
-        //     errorfield.innerHTML = config.errormessages.notalldice;
-        //     calculation.className = 'error';
-        //     errorfield.className = '';
-        // }
+        if ([die1,die2,die3].map(
+            d => {return (d.classList.contains('selected'))})
+            .includes(false)) {
+            errorfield.innerHTML = config.errormessages.notalldice;
+            calculation.className = 'error';
+            errorfield.className = '';
+            return;
+        }
         if (finalvalue >= 0 && finalvalue < 16) {
             calculation.innerHTML = currentterm + ' = ' + finalvalue;
             if (fullscore.dataset.bestvalue > finalvalue) {
